@@ -1,0 +1,57 @@
+{"properties": [
+  {
+    "name": "spring.mail.host",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.host'"
+  },
+  {
+    "name": "spring.mail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.username'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.auth",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.auth'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.auth",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.auth'"
+  },
+  {
+    "name": "spring.mail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.password'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.starttls.enable",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.starttls.enable'"
+  },
+  {
+    "name": "spring.mail.port",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.port'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.timeout",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.timeout'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.connectiontimeout",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.connectiontimeout'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.ssl.trust",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.ssl.trust'"
+  },
+  {
+    "name": "spring.mail.properties.mail.smtp.starttls.required",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.properties.mail.smtp.starttls.required'"
+  }
+]}

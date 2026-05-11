@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inquiry - Bolt, Nut & Engineering Supplies</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    
+    <style>
+        .radio-group {
+            margin: 1rem 0;
+        }
+        
+        .radio-group h3 {
+            color: #003366;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .radio-options {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        #addressField {
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    
+    <script>
+        function toggleAddress() {
+            const delivery = document.getElementById("delivery");
+            const addressField = document.getElementById("addressField");
+            
+            if (delivery && delivery.checked) {
+                addressField.style.display = "block";
+            } else {
+                addressField.style.display = "none";
+            }
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            toggleAddress();
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="experience-badge">
+        <div class="years">30+</div>
+        <div class="text">YEARS<br>OF EXPERIENCE</div>
+    </div>
+
+    <div class="header-content">
+        <h1>BOLT NUT ENGINEERING SUPPLIES (PTY) LTD</h1>
+        <p>Industry Leaders in Fastener & Engineering Solutions Since 1988</p>
+    </div>
+</header>
+
+<nav>
+    <a th:href="@{/home}" class="nav-btn">🏠 HOME</a>
+    <a th:href="@{/products}" class="nav-btn">📦 PRODUCTS</a>
+    <a th:href="@{/about}" class="nav-btn">ℹ️ ABOUT US</a>
+    <a th:href="@{/contact}" class="nav-btn">📞 CONTACT</a>
+    <a th:href="@{/inquiry}" class="nav-btn">📝 ENQUIRY</a>
+</nav>
+
+<section class="form-section">
+    <h2>📝 PRODUCT ENQUIRY FORM</h2>
+    
+    <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+        Fill out the form below and our team will get back to you within 24 hours
+    </p>
+
+    <!-- Success Message -->
+    <div th:if="${param.success}" class="alert alert-success">
+        ✅ <strong>Thank you!</strong> Your enquiry has been sent successfully. We'll get back to you soon.
+    </div>
+    
+    <!-- Error Message -->
+    <div th:if="${param.error}" class="alert alert-error">
+        ❌ <strong>Oops!</strong> There was an error sending your enquiry. Please try again or contact us directly.
+    </div>
+
+    <form th:action="@{/send-inquiry}" th:object="${inquiry}" method="post">
+
+        <!-- Name Field -->
+        <div>
+            <input type="text" 
+                   th:field="*{name}" 
+                   placeholder="Full Name *" 
+                   required
+                   th:class="${#fields.hasErrors('name')} ? 'error-input' : ''">
+            <p th:if="${#fields.hasErrors('name')}" 
+               th:errors="*{name}" 
+               class="error"></p>
+        </div>
+
+        <!-- Email Field -->
+        <div>
+            <input type="email" 
+                   th:field="*{email}" 
+                   placeholder="Email Address *" 
+                   required
+                   th:class="${#fields.hasErrors('email')} ? 'error-input' : ''">
+            <p th:if="${#fields.hasErrors('email')}" 
+               th:errors="*{email}" 
+               class="error"></p>
+        </div>
+
+        <!-- Phone Field -->
+        <div>
+            <input type="tel" 
+                   th:field="*{phone}" 
+                   placeholder="Phone Number *" 
+                   required
+                   th:class="${#fields.hasErrors('phone')} ? 'error-input' : ''">
+            <p th:if="${#fields.hasErrors('phone')}" 
+               th:errors="*{phone}" 
+               class="error"></p>
+        </div>
+
+        <!-- Product Selection -->
+        <div>
+            <select th:field="*{product}" 
+                    required
+                    th:class="${#fields.hasErrors('product')} ? 'error-input' : ''">
+                <option value="">-- Select Product Category *--</option>
+                <option value="Bolts">🔩 Bolts</option>
+                <option value="Nuts">🔧 Nuts</option>
+                <option value="Washers">⚙️ Washers</option>
+                <option value="Screws">🔨 Screws</option>
+                <option value="Tools">🛠️ Tools</option>
+                <option value="Hardware">⚡ Hardware</option>
+                <option value="Specialty">⭐ Specialty Items</option>
+                <option value="Other">Other (Specify in message)</option>
+            </select>
+            <p th:if="${#fields.hasErrors('product')}" 
+               th:errors="*{product}" 
+               class="error"></p>
+        </div>
+
+        <!-- Quantity Field -->
+        <div>
+            <input type="text" 
+                   th:field="*{quantity}" 
+                   placeholder="Quantity (e.g., 100 units, 5 boxes) *" 
+                   required
+                   th:class="${#fields.hasErrors('quantity')} ? 'error-input' : ''">
+            <p th:if="${#fields.hasErrors('quantity')}" 
+               th:errors="*{quantity}" 
+               class="error"></p>
+        </div>
+
+        <!-- Fulfillment Options -->
+        <div class="radio-group">
+            <h3>Fulfillment Method *</h3>
+            <div class="radio-options">
+                <label>
+                    <input type="radio" 
+                           id="delivery"
+                           th:field="*{fulfillment}"
+                           value="Delivery" 
+                           onclick="toggleAddress()"
+                           required> 
+                    🚚 Delivery
+                </label>
+
+                <label>
+                    <input type="radio" 
+                           th:field="*{fulfillment}"
+                           value="Collection" 
+                           onclick="toggleAddress()"
+                           required> 
+                    🏪 Collection
+                </label>
+            </div>
+            <p th:if="${#fields.hasErrors('fulfillment')}" 
+               th:errors="*{fulfillment}" 
+               class="error"></p>
+        </div>
+
+        <!-- Delivery Address (conditionally shown) -->
+        <div id="addressField">
+            <textarea th:field="*{address}" 
+                      placeholder="Delivery Address (Street, City, Postal Code)"
+                      rows="4"></textarea>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                💡 Please provide a complete delivery address including street, city, and postal code
+            </p>
+        </div>
+
+        <!-- Additional Message -->
+        <div>
+            <textarea th:field="*{message}" 
+                      placeholder="Additional notes or specific product requirements (Required)"
+                      rows="5"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">
+            📧 SEND ENQUIRY
+        </button>
+        
+        <p style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 1rem;">
+            * Required fields
+        </p>
+    </form>
+    
+    <!-- Additional Info -->
+    <div class="info-box" style="margin-top: 2rem;">
+        <h3 style="color: #0066cc; margin-bottom: 0.75rem;">📞 Need Immediate Assistance?</h3>
+        <p style="margin-bottom: 0.5rem;">
+            <strong>Phone:</strong> (011) 334-3381 or (083) 995-1270 / (083) 399-1061
+        </p>
+        <p style="margin-bottom: 0.5rem;">
+            <strong>Email:</strong> mwboltne@mweb.co.za
+        </p>
+        <p style="margin-bottom: 0;">
+            <strong>Business Hours:</strong> Mon-Thu: 7:30 AM - 5:00 PM | Fri: 7:30 AM - 2:00 PM
+        </p>
+    </div>
+</section>
+
+<footer>
+    <p><strong>BOLT NUT ENGINEERING SUPPLIES (PTY) LTD</strong></p>
+    <p style="margin-top: 0.5rem;">&copy; 2026 All Rights Reserved | Est. 1988 | 30 Years of Excellence | Developed by Joshuabrown17.07.05@gmail.com</p>
+</footer>
+
+</body>
+</html>
